@@ -117,24 +117,32 @@ openssl enc -d -aes-256-cbc \
 
 ## Security Notes
 
-- **File keeps original name** - only content is encrypted
+- **File is encrypted in-place** - same filename, encrypted content
+- **Works with ANY file type** - text, images, videos, databases, archives, etc.
 - **Key stored in RAM only** - never touches disk
 - **Key displayed once** - write it down or lose it forever
 - **7-pass Gutmann wipe** - key is destroyed from memory
 - **AES-256-CBC** - computationally infeasible to break
-- **Delete file normally** when done (rm, Trash, format)
+- **Encrypted file is unreadable** without the key - permanently destroyed data
 
 ## Use Cases
 
 **File Encryption - Selling laptop/PC:**
 ```bash
+# Encrypt all files in Documents folder
 find ~/Documents -type f -exec sudo datanuke {} \;
+
+# Encrypt specific file types
+find ~/Pictures -type f \( -name "*.jpg" -o -name "*.png" \) -exec sudo datanuke {} \;
 ```
 
 **File Encryption - GDPR compliance (right to erasure):**
 ```bash
+# Works with any file type: CSV, PDF, databases, etc.
 sudo datanuke customer_data.csv
-rm customer_data.csv
+sudo datanuke invoices.pdf
+sudo datanuke database.sqlite
+rm customer_data.csv invoices.pdf database.sqlite
 ```
 
 **Device Encryption - Wiping entire drive before sale/disposal:**
