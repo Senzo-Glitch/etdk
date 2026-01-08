@@ -1,6 +1,8 @@
 # Source files
 bin/
 build/
+build-*/
+compile_commands.json
 reports/
 .cache/
 .makepkg/
@@ -42,6 +44,7 @@ gnupg/
 *.kate-swp
 *.swp
 *.swo
+#- Keep VSCode config for team
 .vscode/
 .idea/
 .qodo/
@@ -61,5 +64,5 @@ coolerdash-bin/
 # Ignore vscode AI rules
 .github/copilot-instructions.md
 .github/instructions/copilot-instructions.md
-.github/instructions/BEST_PRACTICES.instructions.md  
+.github/instructions/BEST_PRACTICES.instructions.md
 .github/instructions/codacy.instructions.md
