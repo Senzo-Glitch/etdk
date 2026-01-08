@@ -1,55 +1,65 @@
-# Prerequisites
-*.d
+# Source files
+bin/
+build/
+reports/
+.cache/
+.makepkg/
+*/pkg/
+pkg/*
+*.tgz
+*.xz
+*.zip
+*.gz
+*.zst
+*.bz2
+*.7z
+*.rar
+*.pkg
+*.pkg.*
+*.tar.gz
+*.files
+*.bak
+*.run
 
-# Object files
-*.o
-*.ko
-*.obj
-*.elf
+# OS files
+*~
+.directory
+.DS_Store
+Thumbs.db
+.Trash-*
+logs/*
+temp/
+gnupg/
+*.orig
+*.old
+*.tmp
+*.log
+*.bak
+*.env
 
-# Linker output
-*.ilk
-*.map
-*.exp
+# Editor files
+*.code-workspace
+*.kate-swp
+*.swp
+*.swo
+.vscode/
+.idea/
+.qodo/
+.zencoder/
+.codacy/
+.codacy.*
 
-# Precompiled Headers
-*.gch
-*.pch
+############################
 
-# Libraries
-*.lib
-*.a
-*.la
-*.lo
+# Internal files
+coolerdash-bin/
 
-# Shared objects (inc. Windows DLLs)
-*.dll
-*.so
-*.so.*
-*.dylib
+# Git files
+!.github
+!.gitignore
 
-# Executables
-*.exe
-*.out
-*.app
-*.i*86
-*.x86_64
-*.hex
-
-# Debug files
-*.dSYM/
-*.su
-*.idb
-*.pdb
-
-# Kernel Module Compile Results
-*.mod*
-*.cmd
-.tmp_versions/
-modules.order
-Module.symvers
-Mkfile.old
-dkms.conf
-
-# debug information files
-*.dwo
+# Ignore vscode AI rules
+.github/copilot-instructions.md
+.github/instructions/copilot-instructions.md
+.github/instructions/BEST_PRACTICES.instructions.md  
+.github/instructions/codacy.instructions.md
