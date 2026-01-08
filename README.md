@@ -230,15 +230,16 @@ openssl enc -d -aes-256-cbc \
 > - **Store keys offline** (paper, secure external storage) if recovery is needed
 > - **For true secure deletion:** Don't save the key at all - just let it be destroyed
 
-## Security Notes
-
-- **File is encrypted in-place** - same filename, encrypted content
-- **Works with files and entire devices** - any file type (text, images, videos, databases, archives) or block device (SSD, HDD, USB drives, partitions)
-- **Key stored in RAM only** - never touches disk
-- **Key displayed once** - write it down or lose it forever
-- **7-pass Gutmann wipe** - key is destroyed from memory
-- **AES-256-CBC** - computationally infeasible to break
-- **Encrypted file is unreadable** without the key - permanently destroyed data
+> [!WARNING]
+> **Security Notes**
+>
+> - **File is encrypted in-place** - same filename, encrypted content
+> - **Works with files and entire devices** - any file type (text, images, videos, databases, archives) or block device (SSD, HDD, USB drives, partitions)
+> - **Key stored in RAM only** - never touches disk
+> - **Key displayed once** - write it down or lose it forever
+> - **7-pass Gutmann wipe** - key is destroyed from memory
+> - **AES-256-CBC** - computationally infeasible to break
+> - **Encrypted file is unreadable** without the key - permanently destroyed data
 
 ## Use Cases
 
