@@ -86,15 +86,16 @@ int main(int argc, char *argv[]) {
             printf("Device size: %.2f GB (%llu bytes)\n\n", size / (1024.0 * 1024.0 * 1024.0),
                    (unsigned long long)size);
         }
-        printf("WARNING: This will DESTROY all data on %s!\n", target_file);
-        printf("Type YES to confirm: ");
-        char confirm[10];
-        if (fgets(confirm, sizeof(confirm), stdin) == NULL || strncmp(confirm, "YES\n", 4) != 0) {
-            printf("Aborted.\n");
-            return 1;
-        }
-        printf("\n");
     }
+
+    printf("WARNING: This will DESTROY all data on %s if you don't save the key!\n", target_file);
+    printf("Type YES to confirm: ");
+    char confirm[10];
+    if (fgets(confirm, sizeof(confirm), stdin) == NULL || strncmp(confirm, "YES\n", 4) != 0) {
+        printf("Aborted.\n");
+        return 1;
+    }
+    printf("\n");
 
     crypto_context_t ctx;
     if (crypto_init(&ctx) != DATANUKE_SUCCESS) {

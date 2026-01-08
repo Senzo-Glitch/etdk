@@ -4,7 +4,24 @@
 
 BSI-compliant secure data deletion through encryption and key destruction.
 
-**POSIX-compliant** tool for Unix-like systems (Linux, macOS, BSD).
+**Cross-platform:** Linux, macOS, Windows, BSD.
+
+```
+║      Encrypt  →  Trash  →  Gone          
+```
+
+---
+
+> [!WARNING]
+> **READ AND UNDERSTAND THIS ENTIRE DOCUMENT BEFORE USING THIS TOOL!**
+>
+> This tool **permanently destroys data** by encrypting it and then securely deleting the encryption key. If you don't save the key when it's displayed, **your data is gone forever** - no recovery is possible, not even with data recovery services.
+>
+> - **This is NOT a backup tool** - make backups first
+> - **This is NOT reversible** - unless you save the encryption key
+> - **Test on non-critical data first** - understand how it works before using on important data
+
+---
 
 ## What It Does
 
@@ -17,6 +34,7 @@ Based on [BSI (Bundesamt für Sicherheit in der Informationstechnik)](https://ww
 ## Why This Method?
 
 - **Cryptographically secure**: AES-256, not just pattern overwriting
+- **Mathematical certainty**: Without the key, decryption is equivalent to solving a mathematically hard problem. Current estimates suggest breaking AES-256 would require more energy than exists in the observable universe
 - **Fast**: Single pass vs. multi-pass wiping (10-20x faster)
 - **SSD-safe**: No wear leveling issues
 - **Universal**: Works on all storage types
@@ -29,19 +47,45 @@ Based on [BSI (Bundesamt für Sicherheit in der Informationstechnik)](https://ww
 
 ## Installation
 
+### Linux
 ```bash
-# Dependencies
-sudo apt-get install build-essential libssl-dev cmake  # Debian/Ubuntu
-# or: brew install openssl cmake  # macOS
+# Debian/Ubuntu
+sudo apt-get install build-essential libssl-dev cmake
 
-# Build and install (using Makefile)
+# Fedora/RHEL/CentOS
+sudo dnf install gcc make openssl-devel cmake
+
+# Arch Linux
+sudo pacman -S base-devel openssl cmake
+
+# Gentoo
+sudo emerge dev-libs/openssl dev-util/cmake
+
+# Build and install
 make
 sudo make install
+```
 
-# Or manually with CMake
+### macOS
+```bash
+brew install openssl cmake
+make
+sudo make install
+```
+
+### Windows
+```bash
+# Install dependencies: Visual Studio, OpenSSL, CMake
 cmake -B build -DCMAKE_BUILD_TYPE=Release
 cmake --build build
-sudo cmake --install build
+cmake --install build
+```
+
+### Manual build (all platforms)
+```bash
+cmake -B build -DCMAKE_BUILD_TYPE=Release
+cmake --build build
+sudo cmake --install build  # or cmake --install build on Windows
 ```
 
 ## Usage
@@ -202,10 +246,12 @@ rm customer_data.csv invoices.pdf database.sqlite
 ```
 
 **Device Encryption - Wiping entire drive before sale/disposal:**
-```bash
-# ⚠️  USE LIVE SYSTEM (boot from USB) when wiping OS drive!
-# ⚠️  Cannot wipe drive with running OS!
 
+> [!WARNING]
+> USE LIVE SYSTEM (boot from USB) when wiping OS drive!
+> Cannot wipe drive with running OS!
+
+```bash
 # Examples (requires root):
 sudo datanuke /dev/sdb        # Entire drive
 sudo datanuke /dev/sdb1       # Single partition
@@ -213,15 +259,15 @@ sudo datanuke /dev/nvme0n1    # NVMe drive
 ```
 
 **Use cases for device encryption:**
-- 📱 Selling, gifting, or trading in devices
-- 🗑️ Disposing of old hard drives and SSDs
-- 🔒 Irrevocable deletion of sensitive information
-- 💼 GDPR compliance (Art. 17 - Right to erasure)
+- Selling, gifting, or trading in devices
+- Disposing of old hard drives and SSDs
+- Irrevocable deletion of sensitive information
+- GDPR compliance (Art. 17 - Right to erasure)
 
-**⚠️  Device Encryption Warnings:**
+**Device Encryption Warnings:**
 - **Unmount before encrypting:** `sudo umount /dev/sdb1`
 - **Use live system** if target contains running OS (boot from Ubuntu Live USB)
-- **All data destroyed permanently** - no recovery possible
+- **Data destroyed if key not saved** - no recovery possible without key
 - **"YES" confirmation required** - tool prevents accidental operations
 - **After encryption:** Device becomes unreadable gibberish - can be safely formatted, reused, or physically destroyed
 
@@ -239,10 +285,7 @@ Key: [destroyed from RAM]
 Result: Encrypted file, no key = data is powerless
 ```
 
-## Contributing
-
-See [CONTRIBUTING.md](CONTRIBUTING.md) for development guidelines.
-BSI Method: "Daten verschlüsseln und Schlüssel wegwerfen"
+## BSI Method: "Daten verschlüsseln und Schlüssel wegwerfen"
 
 DataNuke implements the official BSI (Bundesamt für Sicherheit in der Informationstechnik) recommendation for secure data deletion:
 
@@ -251,23 +294,22 @@ DataNuke implements the official BSI (Bundesamt für Sicherheit in der Informati
 Translation: *"If you have encrypted the data on the storage medium or device, it is sufficient to securely delete all keys. This method provides – provided the key is actually deleted and not just marked as deleted – reliable protection against unauthorized recovery."*
 
 This is exactly what DataNuke does:
-1. ✅ Encrypts data with AES-256-CBC
-2. ✅ Displays key once (optional save for recovery)
-3. ✅ **Securely deletes key** (7-pass Gutmann wipe, volatile memory)
-4. ✅ Key is never written to disk (POSIX mlock())
+1. Encrypts data with AES-256-CBC
+2. Displays key once (optional save for recovery)
+3. Securely deletes key (7-pass Gutmann wipe, volatile memory)
+4. Key is never written to disk (POSIX mlock())
 
-## References
+## Contributing
 
-- [BSI: Daten endgültig löschen](https://www.bsi.bund.de/DE/Themen/Verbraucherinnen-und-Verbraucher/Informationen-und-Empfehlungen/Cyber-Sicherheitsempfehlungen/Daten-sichern-verschluesseln-und-loeschen/Daten-endgueltig-loeschen/daten-endgueltig-loeschen_node.html)## License
+See [CONTRIBUTING.md](CONTRIBUTING.md) for development guidelines.
+
+## License
 
 MIT License - see [LICENSE](LICENSE) file.
 
 ## References
 
+- [BSI: Daten endgültig löschen](https://www.bsi.bund.de/DE/Themen/Verbraucherinnen-und-Verbraucher/Informationen-und-Empfehlungen/Cyber-Sicherheitsempfehlungen/Daten-sichern-verschluesseln-und-loeschen/Daten-endgueltig-loeschen/daten-endgueltig-loeschen_node.html)
 - [BSI CON.6: Löschen und Vernichten](https://www.bsi.bund.de/)
 - [NIST FIPS 197: AES Standard](https://csrc.nist.gov/publications/detail/fips/197/final)
 - [OpenSSL Documentation](https://www.openssl.org/docs/)
-
----
-
-**"Makes data powerless"** – Encryption + Key Destruction = Permanent Data Loss
