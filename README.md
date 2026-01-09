@@ -26,7 +26,7 @@ sudo etdk sensitive_document.pdf
 # You can safely format, delete, reuse, or physically destroy the file/device 
 ```
 
-## Why Now ETDK?
+## Why Now ETDK And What It Does? 
 
 ETDK follows the Unix philosophy: **Do one thing and do it well** - secure data deletion through encryption and key destruction.
 
@@ -40,8 +40,6 @@ ETDK follows the Unix philosophy: **Do one thing and do it well** - secure data 
 - **SSD-safe**: No wear leveling issues
 - **Universal**: Works on all storage types (SSD, HDD, USB drives, partitions, files)
 - **BSI compliant**: Follows German Federal Office for Information Security recommendations
-
-## What It Does
 
 Encrypt => Trash => Gone
 
@@ -63,6 +61,7 @@ Implements the official [BSI (Bundesamt für Sicherheit in der Informationstechn
 - Browser history and cache deletion
 - Email archive secure deletion
 - Personal documents cleanup
+- **Anything you never want recovered. Ever.**
 
 **Browser History & Cache - Secure deletion:**
 ```bash
