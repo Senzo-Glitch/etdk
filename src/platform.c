@@ -1,9 +1,10 @@
 /*
- * ETDK - Secure Data Deletion Tool
+ * ETDK - Encrypt-then-Delete-Key
  * Platform-specific functions for Windows, Linux, and macOS
  */
 
 #include "etdk.h"
+// cppcheck-suppress-begin missingIncludeSystem
 #include <stdio.h>
 #include <sys/stat.h>
 
@@ -21,6 +22,7 @@
 #include <sys/disk.h>
 #endif
 #endif
+// cppcheck-suppress-end missingIncludeSystem
 
 /**
  * @brief Get the size of a device or file in bytes

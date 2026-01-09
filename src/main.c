@@ -1,5 +1,5 @@
 /*
- * ETDK - Secure Data Deletion Tool
+ * ETDK - Encrypt-then-Delete-Key
  * According to BSI recommendations (Bundesamt für Sicherheit in der Informationstechnik)
  *
  * Method: Encrypt data with AES-256, then securely delete encryption key
@@ -7,9 +7,11 @@
  */
 
 #include "etdk.h"
+// cppcheck-suppress-begin missingIncludeSystem
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+// cppcheck-suppress-end missingIncludeSystem
 
 /**
  * @brief Display program usage information and available command-line options

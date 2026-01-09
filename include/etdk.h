@@ -14,8 +14,10 @@
 #ifndef ETDK_H
 #define ETDK_H
 
+// cppcheck-suppress-begin missingIncludeSystem
 #include <stddef.h>
 #include <stdint.h>
+// cppcheck-suppress-end missingIncludeSystem
 
 /** @brief Version string for ETDK */
 #define ETDK_VERSION "1.0.0"

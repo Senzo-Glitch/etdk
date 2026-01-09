@@ -1,9 +1,10 @@
 /*
- * ETDK - Secure Data Deletion Tool
+ * ETDK - Encrypt-then-Delete-Key
  * Crypto Module - AES-256 Encryption according to BSI recommendations
  */
 
 #include "etdk.h"
+// cppcheck-suppress-begin missingIncludeSystem
 #include <openssl/err.h>
 #include <openssl/evp.h>
 #include <openssl/rand.h>
@@ -11,6 +12,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h> // for sleep()
+// cppcheck-suppress-end missingIncludeSystem
 
 /**
  * @brief Initialize cryptographic context with random key and IV
