@@ -1,15 +1,19 @@
-# ETDK - Encrypt-then-Delete-Key
-
-**Makes data powerless** | Secure data deletion through encryption and key destruction.
-
----
-
 > [!CAUTION]
 > **! READ AND UNDERSTAND THIS ENTIRE DOCUMENT BEFORE USING THIS TOOL !**
 >
 > This tool **permanently destroys data** by encrypting it and then securely deleting the encryption key. If you don't save the key when it's displayed, **your data is gone forever** - no recovery is possible, not even with data recovery services.
 
----
+[![Platform: Linux](https://img.shields.io/badge/Platform-Linux-blue.svg)](https://www.linux.org/)
+[![Platform: macOS](https://img.shields.io/badge/Platform-macOS-lightgrey.svg)](https://www.apple.com/macos/)
+[![Platform: Windows](https://img.shields.io/badge/Platform-Windows-0078D6.svg)](https://www.microsoft.com/windows/)
+[![Platform: BSD](https://img.shields.io/badge/Platform-BSD-red.svg)](https://www.bsd.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Language: C](https://img.shields.io/badge/Language-C-00599C.svg)](https://en.wikipedia.org/wiki/C_(programming_language))
+[![BSI Compliant](https://img.shields.io/badge/BSI-Compliant-green.svg)](https://www.bsi.bund.de/)
+
+# ETDK - Encrypt-then-Delete-Key
+
+**Makes data powerless** | Secure data deletion through encryption and key destruction.
 
 Selling your laptop? Disposing of an old drive? Need to permanently delete sensitive files?
 
@@ -22,42 +26,25 @@ sudo etdk sensitive_document.pdf
 rm sensitive_document.pdf  # Normal delete of encrypted file
 ```
 
-## Why ETDK?
-
-| Traditional "Delete" | ETDK |
-|---------------------|------|
-| Can be recovered | Cryptographically impossible to recover |
-| Slow (35-pass wipe) | Fast (single encryption pass) |
-| Breaks SSDs | SSD-safe |
-| Requires special tools | Works everywhere |
-
----
-
-[![Platform: Linux](https://img.shields.io/badge/Platform-Linux-blue.svg)](https://www.linux.org/)
-[![Platform: macOS](https://img.shields.io/badge/Platform-macOS-lightgrey.svg)](https://www.apple.com/macos/)
-[![Platform: Windows](https://img.shields.io/badge/Platform-Windows-0078D6.svg)](https://www.microsoft.com/windows/)
-[![Platform: BSD](https://img.shields.io/badge/Platform-BSD-red.svg)](https://www.bsd.org/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Language: C](https://img.shields.io/badge/Language-C-00599C.svg)](https://en.wikipedia.org/wiki/C_(programming_language))
-[![BSI Compliant](https://img.shields.io/badge/BSI-Compliant-green.svg)](https://www.bsi.bund.de/)
-
-## What It Does
-
-Encrypt => Trash => Gone
-
-ETDK implements the official [BSI (Bundesamt für Sicherheit in der Informationstechnik)](https://www.bsi.bund.de/) recommendation for secure data deletion: **Encrypt data with strong encryption (AES-256-CBC), then securely delete all keys**. This method provides reliable protection against unauthorized recovery — provided the key is actually deleted, not just marked as deleted.
-
-> *"Wenn Sie die Daten auf dem Datenträger oder Gerät verschlüsselt haben, reicht es aus, alle Schlüssel sicher zu löschen."*  
-> — [BSI CON.6](https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/Grundschutz/IT-GS-Kompendium_Einzel_PDFs_2023/03_CON_Konzepte_und_Vorgehensweisen/CON_6_Loeschen_und_Vernichten_Edition_2023.pdf?__blob=publicationFile&v=3) (German Federal Office for Information Security)
-
-Encrypts files or entire devices in-place with AES-256-CBC, displays the encryption key once, then permanently wipes the key from RAM. Without the key, the encrypted data is permanently irrecoverable!
-
-## Why This Method?
+## Why Now ETDK?
 
 - **Cryptographically secure**: AES-256-CBC, not just pattern overwriting
 - **Fast**: Single pass vs. multi-pass wiping (10-20x faster)
 - **SSD-safe**: No wear leveling issues
 - **Universal**: Works on all storage types
+
+## What It Does
+
+Encrypt => Trash => Gone
+
+Encrypts files or entire devices in-place with AES-256-CBC, displays the encryption key once, then permanently wipes the key from RAM. Without the key, the encrypted data is permanently irrecoverable!
+
+This implements the official [BSI (Bundesamt für Sicherheit in der Informationstechnik)](https://www.bsi.bund.de/) recommendation for secure data deletion:  This method provides reliable protection against unauthorized recovery — provided the key is actually deleted, not just marked as deleted.
+
+> *"Wenn Sie die Daten auf dem Datenträger oder Gerät verschlüsselt haben, reicht es aus, alle Schlüssel sicher zu löschen."*
+> 
+> **Encrypt data, then securely delete all keys*.
+> — [BSI CON.6](https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/Grundschutz/IT-GS-Kompendium_Einzel_PDFs_2023/03_CON_Konzepte_und_Vorgehensweisen/CON_6_Loeschen_und_Vernichten_Edition_2023.pdf?__blob=publicationFile&v=3) (German Federal Office for Information Security)
 
 ## Core Principles
 
