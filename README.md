@@ -50,6 +50,7 @@ Based on [BSI (Bundesamt für Sicherheit in der Informationstechnik)](https://ww
 - **Keep it simple**: POSIX-compliant, minimal dependencies
 - **Security first**: Focus on correct implementation of BSI method
 - **No bloat**: Reject features that don't serve core mission
+- **DataNuke follows the Unix philosophy: Do one thing and do it well**
 
 ## Installation
 
@@ -108,13 +109,13 @@ sudo datanuke <file>
 # Encrypt a block device (entire drive/partition)
 sudo datanuke <device>
 ```
-
-**You can safely format, delete, reuse, or physically destroy the file/device.** 
-**After encryption, the file/device is gibberish - worthless without the key.**
-
-To complete secure deletion:
- 1. Remove the encrypted file with normal methods (rm).
- 2. Forget the key if you don't need the data.
+> [!NOTE]
+> **You can safely format, delete, reuse, or physically destroy the file/device.**  
+> **After encryption, the file/device is gibberish - worthless without the key.**
+>
+> To complete secure deletion:
+> 1. Remove the encrypted file with normal methods (rm).
+> 2. Forget the key if you don't need the data.
 
 ### Example: File Encryption
 
