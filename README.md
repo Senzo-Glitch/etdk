@@ -263,6 +263,8 @@ openssl enc -d -aes-256-cbc \
 > - **AES-256-CBC** - NIST standard, computationally infeasible to break
 > - **BSI compliant** - follows German Federal Office for Information Security recommendations
 
+## Use Case
+
 - Selling, gifting, or trading in devices
 - Disposing of old hard drives and SSDs
 - Irrevocable deletion of sensitive information
