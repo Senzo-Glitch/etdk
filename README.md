@@ -42,7 +42,6 @@ Based on recommendations: **"Encrypt-then-Delete-Key"** [BSI CON.6](https://www.
 ## Why This Method?
 
 - **Cryptographically secure**: AES-256, not just pattern overwriting
-- **Mathematical certainty**: Without the key, decryption is equivalent to solving a mathematically hard problem. Current estimates suggest breaking AES-256 would require more energy than exists in the observable universe
 - **Fast**: Single pass vs. multi-pass wiping (10-20x faster)
 - **SSD-safe**: No wear leveling issues
 - **Universal**: Works on all storage types
@@ -227,7 +226,7 @@ To complete secure deletion process:
 - Why 5 passes: RAM has no magnetic remanence (unlike HDDs), random data + volatile pointers = cryptographically secure wipe
 - Memory protection: POSIX mlock() prevented key from swapping to disk
 - File/Device is now gibberish - can be formatted, reused, or physically destroyed
-- Without the key, data recovery is computationally infeasible
+- Without the key, decryption is equivalent to solving a mathematically hard problem. Current estimates suggest breaking AES-256 would require more energy than exists in the observable universe
 
 ## Data Recovery
 
