@@ -23,15 +23,24 @@ ETDK encrypts your data with military-grade encryption (AES-256-CBC), then destr
 ```bash
 sudo etdk sensitive_document.pdf
 # Data is now permanent encrypted garbage - worthless without the key
-rm sensitive_document.pdf  # Normal delete of encrypted file
+# You can safely format, delete, reuse, or physically destroy the file/device 
 ```
 
 ## Why Now ETDK?
 
-- **Cryptographically secure**: AES-256-CBC, not just pattern overwriting
+ETDK follows the Unix philosophy: **Do one thing and do it well** - secure data deletion through encryption and key destruction.
+
+- **Keep it simple**: POSIX-compliant, minimal dependencies
+- **Security first**: AES-256-CBC (NIST standard, computationally infeasible to break), not just pattern overwriting
+- **Zero disk traces**: Key stored in RAM only, never touches disk (mlock-protected)
+- **Thorough key destruction**: 5-pass secure wipe from RAM (0x00 => 0xFF => random => 0x00 => volatile pointers)
+- **One-time key display**: Key shown once on screen - save it now or lose access forever
+- **No bloat**: Reject features that don't serve core mission
+- 
 - **Fast**: Single pass vs. multi-pass wiping (10-20x faster)
 - **SSD-safe**: No wear leveling issues
-- **Universal**: Works on all storage types
+- **Universal**: Works on all storage types (SSD, HDD, USB drives, partitions, files)
+- **BSI compliant**: Follows German Federal Office for Information Security recommendations
 
 ## What It Does
 
@@ -45,21 +54,6 @@ Implements the official [BSI (Bundesamt für Sicherheit in der Informationstechn
 > 
 > **Encrypt data, then securely delete all keys*.
 > — [BSI CON.6](https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/Grundschutz/IT-GS-Kompendium_Einzel_PDFs_2023/03_CON_Konzepte_und_Vorgehensweisen/CON_6_Loeschen_und_Vernichten_Edition_2023.pdf?__blob=publicationFile&v=3) (German Federal Office for Information Security)
-
-## Core Principles
-
-ETDK follows the Unix philosophy: **Do one thing and do it well** - secure data deletion through encryption and key destruction.
-
-- **Keep it simple**: POSIX-compliant, minimal dependencies
-- **Security first**: Focus on correct implementation of BSI method
-- **No bloat**: Reject features that don't serve core mission
-- **In-place encryption**: Same filename, encrypted content - works with any file type
-- **Universal compatibility**: Files and entire devices (SSD, HDD, USB drives, partitions)
-- **Zero disk traces**: Key stored in RAM only, never touches disk (mlock-protected)
-- **One-time key display**: Key shown once on screen - save it now or lose access forever
-- **Cryptographic strength**: AES-256-CBC (NIST standard, computationally infeasible to break)
-- **Thorough key destruction**: 5-pass secure wipe from RAM (0x00 => 0xFF => random => 0x00 => volatile pointers)
-- **BSI compliant**: Follows German Federal Office for Information Security recommendations
 
 ## Use Case
 
