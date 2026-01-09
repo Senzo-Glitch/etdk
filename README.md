@@ -126,7 +126,9 @@ echo "Sensitive data" > secret.txt
 sudo datanuke secret.txt
 ```
 
-**Output:**
+<details>
+  <summary>Output:</summary>
+
 ```
 DataNuke v1.0.0 - Secure Data Deletion (BSI-compliant)
 
@@ -154,6 +156,7 @@ To complete secure deletion process:
  1) You can safely remove the encrypted file with normal methods.
  2) Forget the key if you do not need to recover the data.
 ```
+</details>
 
 **What happened:**
 - `secret.txt` was encrypted in-place (same filename, different content)
@@ -168,15 +171,16 @@ To complete secure deletion process:
 
 > [!NOTE]
 > USE LIVE SYSTEM (boot from USB) when wiping OS drive!
-> Cannot wipe drive with running OS!
-> **Unmount before encrypting:** `sudo umount /dev/sdb1`
+> Cannot wipe drive with running OS!   
+> Unmount before encrypting: `sudo umount /dev/sdb1`
 
 ```bash
 # Create a test partition or use existing device
 sudo datanuke /dev/sdb1
 ```
+<details>
+  <summary>Output:</summary>
 
-**Output:**
 ```
 DataNuke v1.0.0 - Secure Data Deletion (BSI-compliant)
 
@@ -214,6 +218,7 @@ To complete secure deletion process:
  1) You can safely remove the encrypted file with normal methods.
  2) Forget the key if you do not need to recover the data.
 ```
+</details>
 
 **What happened:**
 - `/dev/sdb1` was encrypted in-place (raw sectors overwritten with encrypted data)
@@ -279,11 +284,6 @@ rm customer_data.csv invoices.pdf database.sqlite
 ```
 
 **Device Encryption - Wiping entire drive before sale/disposal:**
-
-> [!NOTE]
-> USE LIVE SYSTEM (boot from USB) when wiping OS drive!
-> Cannot wipe drive with running OS!
-
 ```bash
 # Examples (requires root):
 sudo datanuke /dev/sdb        # Entire drive
