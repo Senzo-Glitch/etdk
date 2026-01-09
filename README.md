@@ -158,15 +158,6 @@ To complete secure deletion process:
 ```
 </details>
 
-**What happened:**
-- `secret.txt` was encrypted in-place (same filename, different content)
-- Algorithm: AES-256-CBC with random 256-bit key and 128-bit IV
-- Key generation: OpenSSL RAND_bytes() (cryptographically secure)
-- Encryption key was displayed on screen (one-time only)
-- Key was wiped from RAM with 7-pass Gutmann method (0x00, 0xFF, random, 0x00, volatile)
-- Memory protection: POSIX mlock() prevented key from swapping to disk
-- File is now encrypted gibberish without the key
-
 ### Example: Block Device Encryption
 
 > [!NOTE]
@@ -220,7 +211,7 @@ To complete secure deletion process:
 ```
 </details>
 
-**What happened:**
+**What is happened:**
 - `secret.txt` was encrypted in-place (same filename, different content)
 - `/dev/sdb1` was encrypted in-place (raw sectors overwritten with encrypted data)
 - Algorithm: AES-256-CBC with random 256-bit key and 128-bit IV
