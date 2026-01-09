@@ -37,7 +37,7 @@ Encrypt → Trash → Gone
 
 Encrypts files or entire devices in-place with AES-256-CBC, displays the encryption key once, then permanently wipes the key from RAM. Without the key, the encrypted data is permanently irrecoverable!
 
-Based on [BSI (Bundesamt für Sicherheit in der Informationstechnik)](https://www.bsi.bund.de/DE/Themen/Verbraucherinnen-und-Verbraucher/Informationen-und-Empfehlungen/Cyber-Sicherheitsempfehlungen/Daten-sichern-verschluesseln-und-loeschen/Daten-endgueltig-loeschen/daten-endgueltig-loeschen_node.html) recommendations: **"Encrypt-then-Delete-Key"** (BSI CON.6).
+Based on recommendations: **"Encrypt-then-Delete-Key"** [BSI CON.6](https://www.bsi.bund.de/DE/Themen/Verbraucherinnen-und-Verbraucher/Informationen-und-Empfehlungen/Cyber-Sicherheitsempfehlungen/Daten-sichern-verschluesseln-und-loeschen/Daten-endgueltig-loeschen/daten-endgueltig-loeschen_node.html).
 
 ## Why This Method?
 
