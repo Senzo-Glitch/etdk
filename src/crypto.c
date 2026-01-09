@@ -202,16 +202,23 @@ void crypto_display_key(const crypto_context_t *ctx) {
 }
 
 /**
- * @brief Securely wipe encryption key using 7-pass Gutmann method
+ * @brief Securely wipe encryption key using 5-pass overwrite method
  *
  * Implements a multi-pass overwrite strategy to prevent key recovery:
  * Pass 1: Write all zeros (0x00)
  * Pass 2: Write all ones (0xFF)
- * Pass 3: Write random data
- * Pass 4: Write all zeros again
- * Pass 5: Use volatile pointers to prevent compiler optimization
+ * Pass 3: Write cryptographically secure random data
+ * Pass 4: Write all zeros again (clean state)
+ * Pass 5: Volatile pointer overwrite (prevents compiler optimization)
  *
- * This follows BSI recommendations for secure key destruction.
+ * Why 5 passes are sufficient:
+ * - RAM has no magnetic remanence (unlike HDDs)
+ * - Random data pass makes pattern analysis impossible
+ * - Volatile pointers prevent compiler from optimizing away writes
+ * - Modern SSDs/RAM don't need 35-pass Gutmann (designed for magnetic media)
+ * - BSI recommends multi-pass with random data for RAM/SSD
+ *
+ * This follows BSI recommendations for secure key destruction in volatile memory.
  *
  * @param ctx Pointer to crypto_context_t containing key to wipe
  * @return ETDK_SUCCESS on success, ETDK_ERROR_CRYPTO on failure

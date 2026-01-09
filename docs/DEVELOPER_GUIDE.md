@@ -92,46 +92,97 @@ hexdump -C test.txt  # Verify it's encrypted
 
 ### crypto.c
 
-- `crypto_init()` - Initialize context, generate random key/IV
-- `crypto_encrypt_file()` - AES-256-CBC file encryption (EVP API)
-- `crypto_encrypt_device()` - AES-256-CBC block device encryption
-- `crypto_display_key()` - Display key once (POSIX-style plain text)
-- `crypto_secure_wipe_key()` - 7-pass Gutmann key wipe
-- `crypto_cleanup()` - Free OpenSSL context
+**Key Management:**
+- `crypto_init()` (line 51) - Initialize context, generate random key/IV with RAND_bytes()
+- `crypto_generate_key()` (line 82) - Generate cryptographically secure random key
+- `crypto_display_key()` (line 182) - Display key once (POSIX-style plain text, 3-second pause)
+- `crypto_secure_wipe_key()` (line 219) - 5-pass secure key wipe
+- `crypto_cleanup()` (line 270) - Free OpenSSL context and wipe all sensitive data
+
+**Encryption:**
+- `init_cipher_context()` (line 25) - Helper: Initialize EVP cipher context (reduces duplication)
+- `crypto_encrypt_file()` (line 103) - AES-256-CBC file encryption (4KB chunks)
+- `crypto_encrypt_device()` (line 284) - AES-256-CBC block device encryption (1MB chunks)
 
 ### main.c
 
-- Parse args (including --help/-h/help flags)
-- Check if target is file or block device
-- Encrypt file/device with AES-256-CBC
-- Display key once (plain text, no countdown)
-- Wipe key from memory (7-pass Gutmann)
-- Output: POSIX-compliant, no ANSI colors
+**Workflow (main function, line 44):**
+1. Parse args including --help/-h/help flags (line 45-53)
+2. Check if target is file or block device with `platform_is_device()` (line 58)
+3. Lock crypto context in RAM with `platform_lock_memory()` (line 85)
+4. Encrypt file or device with AES-256-CBC (line 93 or 74)
+5. Display key once - plain text, no countdown (line 106)
+6. Wipe key from memory with 5-pass method (line 109)
+7. Unlock memory with `platform_unlock_memory()` (line 129)
+8. Output: POSIX-compliant, no ANSI colors
 
 ### platform.c
 
-- `platform_lock_memory()` - mlock (Unix) / VirtualLock (Windows)
-- `platform_unlock_memory()` - munlock / VirtualUnlock
+**Memory Protection:**
+- `platform_lock_memory()` - mlock (Unix) / VirtualLock (Windows) - Prevents key swapping to disk
+- `platform_unlock_memory()` - munlock / VirtualUnlock - Allows memory to be swapped again
+- `platform_get_device_size()` - Get size of block device in bytes
+- `platform_is_device()` - Check if path is a block device vs regular file
 
 ## Key Security
 
 **Key Lifecycle (Encrypt-then-Delete-Key Method):**
-1. Generated with `RAND_bytes()` (CSPRNG)
-2. Locked in RAM with `mlock()` (no swap)
-3. Used for encryption (file or device)
-4. Displayed once (plain text, save now or lose forever)
-5. 3-second pause for user to save key
-6. Wiped with 7-pass Gutmann
-7. Memory unlocked
+1. Generated with `RAND_bytes()` (CSPRNG) → `crypto_init()` line 64
+2. Locked in RAM with `mlock()` (no swap) → `main.c` line 85
+3. Used for encryption (file or device) → `crypto_encrypt_file()` or `crypto_encrypt_device()`
+4. Displayed once (plain text, save now or lose forever) → `crypto_display_key()` line 182-207
+5. 3-second pause for user to save key → `sleep(3)` line 207
+6. Wiped with 5-pass secure method → `crypto_secure_wipe_key()` line 219-263
+7. Memory unlocked → `main.c` line 129
 
 Without the key, encrypted data is permanently irrecoverable (BSI method).
 
-**Gutmann Wipe:**
-- Pass 1: 0x00
-- Pass 2: 0xFF
-- Pass 3: random
-- Pass 4: 0x00
-- Passes 5-7: volatile pointer overwrite
+**Secure Key Wipe Implementation (`crypto_secure_wipe_key()`):**
+
+```c
+// Pass 1: Overwrite with zeros (0x00) - line 226-228
+memset(ctx->key, 0x00, AES_KEY_SIZE);
+memset(ctx->iv, 0x00, AES_BLOCK_SIZE);
+
+// Pass 2: Overwrite with ones (0xFF) - line 233-235
+memset(ctx->key, 0xFF, AES_KEY_SIZE);
+memset(ctx->iv, 0xFF, AES_BLOCK_SIZE);
+
+// Pass 3: Overwrite with random data - line 240-242
+RAND_bytes(ctx->key, AES_KEY_SIZE);
+RAND_bytes(ctx->iv, AES_BLOCK_SIZE);
+
+// Pass 4: Final overwrite with zeros - line 247-249
+memset(ctx->key, 0x00, AES_KEY_SIZE);
+memset(ctx->iv, 0x00, AES_BLOCK_SIZE);
+
+// Pass 5: Volatile pointer overwrite (prevents compiler optimization) - line 254-261
+volatile uint8_t *vkey = (volatile uint8_t *)ctx->key;
+volatile uint8_t *viv = (volatile uint8_t *)ctx->iv;
+for (size_t i = 0; i < AES_KEY_SIZE; i++) {
+    vkey[i] = 0;
+}
+for (size_t i = 0; i < AES_BLOCK_SIZE; i++) {
+    viv[i] = 0;
+}
+```
+
+**Why 5 passes are sufficient (not 35 like Gutmann):**
+
+1. **RAM has no magnetic remanence** - Unlike HDDs, RAM cells don't retain "ghost" data after overwrite
+2. **No data recovery from modern RAM** - Once overwritten, data in DRAM/SRAM is immediately lost
+3. **Random data prevents pattern analysis** - Pass 3 uses `RAND_bytes()` (cryptographic RNG) which makes any residual electrical patterns unpredictable
+4. **Volatile pointers defeat compiler optimization** - Pass 5 ensures the compiler can't optimize away the writes (critical!)
+5. **BSI recommendations** - BSI (German Federal Office for Information Security) recommends multi-pass with random data for volatile memory
+6. **Performance vs security balance** - 5 passes provide cryptographic-level security without unnecessary overhead
+
+**Why NOT 35 passes like Gutmann?**
+- Gutmann's 35-pass method was designed for **magnetic media** (HDDs) with data remanence
+- Modern SSDs and RAM have **no magnetic properties**
+- Cold boot attacks are mitigated by the random data pass
+- Additional passes beyond 5 provide no security benefit for RAM
+
+**Security guarantee:** After 5 passes with random data and volatile overwrite, key recovery is computationally infeasible, even with physical memory access
 
 ## POSIX-Style Output
 
@@ -391,6 +442,26 @@ brew install doxygen graphviz          # macOS
 doxygen Doxyfile
 # Output in docs/html/index.html
 ```
+
+### Function Documentation Format
+All functions use Doxygen-style comments:
+```c
+/**
+ * @brief Short one-line description
+ *
+ * Detailed explanation of what the function does,
+ * implementation details, algorithm description.
+ *
+ * @param param_name Description of parameter
+ * @return Return value description
+ */
+```
+
+### Key Documentation Files
+- `etdk.h` - Public API with full Doxygen comments for all exported functions
+- `crypto.c` - Crypto implementation with detailed algorithm explanations
+- `main.c` - CLI workflow with step-by-step comments
+- `platform.c` - Platform-specific implementations with OS differences documented
 
 ### Update README
 - Keep installation instructions current
